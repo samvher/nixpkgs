@@ -58,7 +58,7 @@ symlinkJoin {
   # as a dedicated drv attribute, like `compiler-name`
   name = ghc.name + "-with-packages";
   paths = paths ++ [ghc];
-  extraOutputsToInstall = [ "out" "doc" ];
+  extraOutputsToInstall = [ "out" "doc" "lib" ];
   inherit ignoreCollisions;
   postBuild = ''
     . ${makeWrapper}/nix-support/setup-hook
