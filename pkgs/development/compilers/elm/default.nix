@@ -45,7 +45,7 @@ let
       let hlib = haskell.lib;
           elmRelease = import ./packages/release.nix { inherit (self) callPackage; };
           elmPkgs' = elmRelease.packages;
-          elmPkgs = elmPkgs' // {
+          elmPkgs = lib.mapAttrs (name: value: hlib.disableSharedExecutables value) (elmPkgs' // {
 
             elm-reactor = hlib.overrideCabal elmPkgs'.elm-reactor (drv: {
               buildTools = drv.buildTools or [] ++ [ self.elm-make ];
@@ -75,7 +75,7 @@ let
             elm-interface-to-json = self.callPackage ./packages/elm-interface-to-json.nix {
               aeson-pretty = self.aeson-pretty_0_7_2;
             };
-          };
+          });
       in elmPkgs // {
         inherit elmPkgs;
         elmVersion = elmRelease.version;
