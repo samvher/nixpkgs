@@ -3,6 +3,7 @@
 , postBuild ? ""
 , haskellPackages
 , ghcLibdir ? null # only used by ghcjs, when resolving plugins
+, extraOutputsToInstall ? [ "out" "doc" "lib" ]
 }:
 
 assert ghcLibdir != null -> (ghc.isGhcjs or false);
@@ -58,8 +59,7 @@ symlinkJoin {
   # as a dedicated drv attribute, like `compiler-name`
   name = ghc.name + "-with-packages";
   paths = paths ++ [ghc];
-  extraOutputsToInstall = [ "out" "doc" "lib" ];
-  inherit ignoreCollisions;
+  inherit extraOutputsToInstall ignoreCollisions;
   postBuild = ''
     . ${makeWrapper}/nix-support/setup-hook
 
