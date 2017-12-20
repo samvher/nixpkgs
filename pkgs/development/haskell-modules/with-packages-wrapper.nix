@@ -3,7 +3,7 @@
 , postBuild ? ""
 , haskellPackages
 , ghcLibdir ? null # only used by ghcjs, when resolving plugins
-, extraOutputsToInstall ? [ "out" "doc" "lib" ]
+, extraOutputsToInstall ? [ "out" "doc" "lib" "bin" ]
 }:
 
 assert ghcLibdir != null -> (ghc.isGhcjs or false);
